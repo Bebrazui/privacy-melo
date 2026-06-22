@@ -93,16 +93,48 @@
   h2{font-size:clamp(30px,4.5vw,46px);font-weight:700;text-align:center;margin:10px 0 14px;letter-spacing:-.7px}
   .lead{color:var(--muted);text-align:center;max-width:620px;margin:0 auto 50px;font-size:17px}
 
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .feature{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:26px;transition:.25s;opacity:0;transform:translateY(24px)}
+  /* bento-сетка возможностей */
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;grid-auto-rows:minmax(158px,1fr)}
+  .feature{position:relative;overflow:hidden;display:flex;flex-direction:column;
+    background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+    border:1px solid var(--line);border-radius:24px;padding:26px;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s;
+    opacity:0;transform:translateY(26px)}
   .feature.in{opacity:1;transform:none}
-  .feature:hover{transform:translateY(-6px);border-color:rgba(120,200,160,.32);
-    box-shadow:0 18px 50px rgba(0,0,0,.4)}
+  .feature:hover{transform:translateY(-6px);border-color:rgba(120,200,160,.38);
+    box-shadow:0 22px 60px rgba(0,0,0,.45)}
+  /* мягкое свечение, проявляется на ховере */
+  .feature::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;top:-130px;right:-90px;
+    background:radial-gradient(circle,rgba(130,225,170,.18),transparent 70%);opacity:0;transition:opacity .45s;pointer-events:none}
+  .feature:hover::after{opacity:1}
+
+  .span-3{grid-column:span 3} .span-2{grid-column:span 2} .row-2{grid-row:span 2}
+
   .ficon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;
-    font-size:28px;color:var(--accent);background:rgba(120,200,160,.10);border:1px solid var(--line);margin-bottom:16px}
+    font-size:28px;color:var(--accent);background:rgba(120,200,160,.10);border:1px solid var(--line);
+    margin-bottom:16px;transition:.35s}
+  .feature:hover .ficon{background:rgba(120,200,160,.18);transform:rotate(-6deg) scale(1.06);
+    box-shadow:0 0 26px rgba(120,220,160,.25)}
   .feature h3{font-size:19px;margin-bottom:8px;font-weight:600}
   .feature p{color:var(--muted);font-size:15px}
+  .feature .body{position:relative;z-index:2}
+
+  /* большая карточка Sea */
+  .feature.big{justify-content:space-between;
+    background:linear-gradient(155deg,rgba(80,200,140,.14),rgba(20,80,50,.10) 55%,rgba(255,255,255,.02))}
+  .feature.big .ficon{width:62px;height:62px;font-size:32px}
+  .feature.big h3{font-size:clamp(24px,3vw,32px);letter-spacing:-.5px}
+  .feature.big p{font-size:16px;max-width:90%}
+  .feature.big .tag{display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+    border:1px solid var(--line);background:rgba(120,200,160,.08);color:var(--accent);
+    border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;width:max-content}
+  /* живая волна на дне карточки */
+  .sea-wave{position:absolute;left:0;right:0;bottom:0;height:46%;z-index:1;pointer-events:none;
+    -webkit-mask-image:linear-gradient(transparent,#000 60%);mask-image:linear-gradient(transparent,#000 60%)}
+  .sea-wave svg{width:200%;height:100%;display:block}
+  .sea-wave .w1{animation:waveMove 11s linear infinite}
+  .sea-wave .w2{animation:waveMove 7s linear infinite reverse;opacity:.5}
+  @keyframes waveMove{to{transform:translateX(-50%)}}
 
   /* free band */
   .band{background:linear-gradient(120deg,rgba(80,200,140,.08),rgba(20,80,50,.16));
@@ -146,7 +178,8 @@
     .hero .badge,.cta,.hint{justify-content:center}
     .hero p.sub{margin-left:auto;margin-right:auto}
     .phones{height:520px;margin-top:24px;transform:scale(.92)}
-    .grid{grid-template-columns:1fr}
+    .bento{grid-template-columns:1fr}
+    .span-3,.span-2,.row-2{grid-column:auto;grid-row:auto}
     .nav a.link{display:none}
   }
 </style>
@@ -191,13 +224,55 @@
     <div class="eyebrow">Почему Melo</div>
     <h2>Сделано для тех, кто <span class="accent">правда</span> слушает</h2>
     <p class="lead">Всё, что нужно меломану — без ограничений и компромиссов.</p>
-    <div class="grid">
-      <div class="feature"><div class="ficon"><i class="ph ph-wave-sine"></i></div><h3>Бесконечная волна Sea</h3><p>Включи и слушай нон-стоп — поток подстраивается под твой вкус и не повторяется.</p></div>
-      <div class="feature"><div class="ficon"><i class="ph ph-gauge"></i></div><h3>Slowed &amp; Sped up</h3><p>Замедляй и ускоряй любой трек с изменением тона. Сохраняй версии в избранное и плейлисты.</p></div>
-      <div class="feature"><div class="ficon"><i class="ph ph-cloud-arrow-down"></i></div><h3>Офлайн</h3><p>Скачивай треки и слушай без интернета. Скачанное играет прямо с устройства.</p></div>
-      <div class="feature"><div class="ficon"><i class="ph ph-playlist"></i></div><h3>Импорт плейлистов</h3><p>Переноси плейлисты и лайки из YouTube Music, SoundCloud или из папки на телефоне.</p></div>
-      <div class="feature"><div class="ficon"><i class="ph ph-microphone-stage"></i></div><h3>Текст с караоке</h3><p>Синхронный текст песни, который подсвечивается по словам в такт музыке.</p></div>
-      <div class="feature"><div class="ficon"><i class="ph ph-equalizer"></i></div><h3>Звук под себя</h3><p>Эквалайзер, усиление и реверберация. Плавный кроссфейд между треками.</p></div>
+    <div class="bento">
+
+      <div class="feature big span-3 row-2">
+        <div class="body"><div class="ficon"><i class="ph ph-wave-sine"></i></div></div>
+        <div class="body">
+          <h3>Бесконечная волна Sea</h3>
+          <p>Включи и слушай нон-стоп. Поток подстраивается под твой вкус, не повторяется и не требует собирать очередь вручную.</p>
+          <span class="tag"><span class="dot"></span> Играет, пока ты слушаешь</span>
+        </div>
+        <div class="sea-wave" aria-hidden="true">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path class="w1" d="M0 64 C 180 24, 360 104, 720 64 C 900 24, 1080 104, 1440 64 L1440 120 L0 120 Z" fill="rgba(120,220,160,.30)"/>
+          </svg>
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="position:absolute;inset:0">
+            <path class="w2" d="M0 78 C 200 48, 380 110, 720 78 C 1060 48, 1240 110, 1440 78 L1440 120 L0 120 Z" fill="rgba(80,180,130,.22)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="feature span-3">
+        <div class="body"><div class="ficon"><i class="ph ph-gauge"></i></div>
+        <h3>Slowed &amp; Sped up</h3>
+        <p>Замедляй и ускоряй любой трек с изменением тона. Сохраняй slowed- и sped-версии в избранное и плейлисты.</p></div>
+      </div>
+
+      <div class="feature span-3">
+        <div class="body"><div class="ficon"><i class="ph ph-cloud-arrow-down"></i></div>
+        <h3>Офлайн</h3>
+        <p>Скачивай треки и слушай без интернета — скачанное играет прямо с устройства.</p></div>
+      </div>
+
+      <div class="feature span-2">
+        <div class="body"><div class="ficon"><i class="ph ph-playlist"></i></div>
+        <h3>Импорт плейлистов</h3>
+        <p>Переноси плейлисты и лайки из YouTube Music, SoundCloud или из папки на телефоне.</p></div>
+      </div>
+
+      <div class="feature span-2">
+        <div class="body"><div class="ficon"><i class="ph ph-microphone-stage"></i></div>
+        <h3>Текст с караоке</h3>
+        <p>Синхронный текст, который подсвечивается по словам в такт музыке.</p></div>
+      </div>
+
+      <div class="feature span-2">
+        <div class="body"><div class="ficon"><i class="ph ph-equalizer"></i></div>
+        <h3>Звук под себя</h3>
+        <p>Эквалайзер, усиление и реверберация. Плавный кроссфейд между треками.</p></div>
+      </div>
+
     </div>
   </section>
 
