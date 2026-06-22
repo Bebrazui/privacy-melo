@@ -202,15 +202,12 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
-      <span class="badge"><span class="dot"></span> Alpha • v0.1.1 — бесплатно</span>
+    <div class="hero-copy">
       <h1>Музыка <span class="accent">без границ</span></h1>
       <p class="sub">Melo — это не просто плеер. Это <b>бесконечная волна</b> под твой вкус, <b>slowed &amp; sped up</b>, офлайн и синхронный текст. <b>Без рекламы и без подписки.</b></p>
       <div class="cta">
         <a class="btn btn-primary btn-lg" href="https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" download><i class="ph ph-android-logo"></i> Скачать на Android</a>
-        <span class="btn btn-ghost btn-lg soon"><i class="ph ph-apple-logo"></i> iPhone — скоро</span>
       </div>
-      <p class="hint"><i class="ph ph-device-mobile"></i> Android 8.0+ · ~68 МБ · установка из APK</p>
     </div>
     <div class="phones">
       <div class="phone left"><img src="img/screen-search.png" alt="Поиск в Melo"/></div>
@@ -344,11 +341,28 @@
   },{threshold:.18});
   document.querySelectorAll('.reveal').forEach(el=>rio.observe(el));
 
-  // прогресс-бар скролла
+  // прогресс-бар скролла + параллакс
   const prog=document.getElementById('progress');
-  const onScroll=()=>{ const h=document.documentElement;
-    const p=h.scrollTop/(h.scrollHeight-h.clientHeight); prog.style.width=(p*100)+'%'; };
-  document.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  const phonesEl=document.querySelector('.phones');
+  const heroCopy=document.querySelector('.hero-copy');
+  const bannerDeco=document.querySelector('.banner-deco');
+  const isDesktop=window.matchMedia('(min-width:881px)').matches;
+  let ticking=false;
+  const applyScroll=()=>{
+    const h=document.documentElement, sc=h.scrollTop;
+    prog.style.width=(sc/(h.scrollHeight-h.clientHeight)*100)+'%';
+    if(isDesktop){
+      if(phonesEl) phonesEl.style.transform=`translateY(${sc*0.12}px)`;
+      if(heroCopy)  heroCopy.style.transform=`translateY(${sc*0.05}px)`;
+    }
+    if(bannerDeco){
+      const r=bannerDeco.getBoundingClientRect();
+      bannerDeco.style.transform=`translateY(${(window.innerHeight-r.top)*0.06}px) scale(1.04)`;
+    }
+    ticking=false;
+  };
+  const onScroll=()=>{ if(!ticking){ requestAnimationFrame(applyScroll); ticking=true; } };
+  document.addEventListener('scroll',onScroll,{passive:true}); applyScroll();
 
   // спотлайт за курсором
   const root=document.documentElement;
