@@ -42,7 +42,11 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+  }
 
   body, button, input, a, .brand {
     font-family: 'Google Sans', -apple-system, Roboto, sans-serif !important;
@@ -54,6 +58,8 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 
   .material-symbols-rounded {
@@ -188,19 +194,6 @@
     z-index: 10;
   }
 
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    border-radius: var(--radius-pill);
-    background: var(--primary-soft);
-    color: var(--primary);
-    font-size: 13.5px;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-
   h1 {
     font-size: clamp(42px, 6vw, 72px);
     font-weight: 700;
@@ -260,7 +253,7 @@
     text-align: center;
   }
 
-  .hero-side-card.right img {
+  .hero-side-card.right .qr-img {
     width: 104px;
     height: 104px;
     border-radius: 10px;
@@ -341,20 +334,30 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 12px 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
   }
 
   .category-nav {
     width: 100%;
+    max-width: 100%;
     padding: 0 44px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  .category-nav::-webkit-scrollbar { display: none; }
+  .category-nav::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
 
   .pill-tab {
     padding: 9px 20px;
@@ -387,14 +390,19 @@
 
   .m3-card {
     border-radius: var(--radius-card);
-    padding: 44px 44px 36px;
+    padding: 44px 44px 38px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 460px;
+    min-height: 250px;
     position: relative;
     overflow: hidden;
     border: none;
+    transition: none;
+  }
+
+  .m3-card:hover {
+    transform: none;
   }
 
   .card-green { background-color: var(--card-green); }
@@ -412,10 +420,10 @@
   }
 
   .m3-card h3 {
-    font-size: clamp(26px, 3vw, 36px);
+    font-size: clamp(24px, 2.6vw, 32px);
     font-weight: 700;
     letter-spacing: -0.02em;
-    line-height: 1.14;
+    line-height: 1.18;
     margin-bottom: 14px;
   }
 
@@ -423,7 +431,8 @@
     font-size: 16px;
     color: var(--text-sub);
     line-height: 1.55;
-    max-width: 480px;
+    max-width: 500px;
+    margin-bottom: 24px;
   }
 
   .card-footer-link {
@@ -433,125 +442,10 @@
     font-weight: 600;
     font-size: 15px;
     color: var(--primary);
-    margin-top: 20px;
+    margin-top: auto;
   }
 
-  .card-footer-link:hover { text-decoration: underline; }
 
-  /* ВИЗУАЛ ВНУТРИ КАРТОЧЕК (ЧИСТЫЙ СПЕЙСИНГ БЕЗ ОБВОДОК) */
-  .card-visual-bottom {
-    margin-top: 36px;
-    border-top: none;
-  }
-
-  /* Визуал 1: Стриминг треков */
-  .mock-track-pill {
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 18px;
-    padding: 12px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    margin-bottom: 8px;
-  }
-
-  .mock-icon-box {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-  }
-
-  .mock-track-title { font-size: 14px; font-weight: 700; color: var(--text); }
-  .mock-track-sub { font-size: 12px; color: var(--text-dim); }
-
-  /* Визуал 2: Волна Sea (Рекомендации вместо микрофичи винила) */
-  .wave-visual-box {
-    background: rgba(255, 255, 255, 0.88);
-    border-radius: 20px;
-    padding: 16px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  }
-
-  .wave-chip-list {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .wave-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #ffffff;
-    border-radius: var(--radius-pill);
-    padding: 6px 14px;
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text-sub);
-    border: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  }
-
-  .wave-chip.active {
-    background: #f3e8fd;
-    color: #7b1fa2;
-    border: none;
-  }
-
-  .wave-now-playing {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 13px;
-    color: var(--text-sub);
-    font-weight: 500;
-  }
-
-  /* Визуал 3: ByeDPI Network */
-  .net-visual-box {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 18px;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  }
-
-  .net-status-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .net-status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #137333;
-  }
-
-  .net-title { font-size: 13.5px; font-weight: 700; color: var(--text); }
-  .net-desc { font-size: 12px; color: var(--text-dim); }
-
-  /* Визуал 4: Офлайн хранилище */
-  .offline-visual-box {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 18px;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  }
 
   /* FAQ */
   .faq-wrap {
@@ -639,13 +533,269 @@
     padding-top: 24px;
   }
 
+  /* РУКОПИСНЫЕ DOODLE-ЭЛЕМЕНТЫ */
+  .doodle-item {
+    position: absolute;
+    pointer-events: none;
+    z-index: 18;
+    user-select: none;
+    will-change: transform;
+    transition: transform 0.1s linear;
+  }
+
+  .doodle-arrow {
+    left: -32px;
+    top: 4px;
+    width: 58px;
+    height: auto;
+    opacity: 0.95;
+  }
+
+  .doodle-underline {
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 360px;
+    max-width: 90%;
+    height: 32px;
+    opacity: 0.95;
+    pointer-events: none;
+  }
+
+  .doodle-sun {
+    left: 44px;
+    bottom: 145px;
+    width: 155px;
+    height: auto;
+    opacity: 0.92;
+  }
+
+  .doodle-notes {
+    right: 48px;
+    bottom: 50px;
+    width: 115px;
+    height: auto;
+    opacity: 0.92;
+  }
+
+  .doodle-circle {
+    position: absolute;
+    top: -26px;
+    left: -32px;
+    width: 210px;
+    height: 224px;
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0.92;
+  }
+
+  /* АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И СМАРТФОНОВ */
   @media (max-width: 1200px) {
     .hero-side-card { display: none; }
+    .doodle-sun { display: none; }
+    .doodle-notes { display: none; }
+    .doodle-arrow { left: -16px; top: -10px; width: 46px; }
     .nav-full { padding: 0 24px; }
     .features-container { padding: 40px 24px 70px; }
     .cards-grid { grid-template-columns: 1fr; }
     .pano-card.outer { display: none; }
     .nav-links { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    /* Хедер */
+    .nav-full {
+      height: 60px;
+      padding: 0 16px;
+      gap: 12px;
+    }
+
+    .brand {
+      font-size: 19px;
+      gap: 8px;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .header-btn-github {
+      display: none;
+    }
+
+    .header-btn-apk {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 36px 0 16px;
+      overflow-x: hidden;
+    }
+
+    .hero-container {
+      padding: 0 16px;
+    }
+
+    h1 {
+      font-size: clamp(24px, 6.8vw, 34px);
+      line-height: 1.18;
+      margin-bottom: 16px;
+    }
+
+    .doodle-arrow {
+      position: absolute;
+      width: 34px;
+      top: -24px;
+      left: 0px;
+    }
+
+    .hero p.lead {
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    .doodle-underline {
+      width: 260px;
+      bottom: -22px;
+      height: 20px;
+    }
+
+    .hero-cta {
+      margin-top: 14px;
+      margin-bottom: 14px;
+    }
+
+    .btn-lg {
+      width: 100%;
+      max-width: 320px;
+      padding: 14px 20px;
+      font-size: 15px;
+    }
+
+    .hero-meta {
+      font-size: 12px;
+      line-height: 1.4;
+      padding: 0 10px;
+    }
+
+    /* Панорама скриншотов на мобильных */
+    .panorama-wrap {
+      width: 100%;
+      margin: 0;
+      padding: 24px 0 36px;
+    }
+
+    .panorama-track {
+      width: 100%;
+      justify-content: center;
+      gap: 12px;
+      padding: 0 16px;
+    }
+
+    .pano-card.side {
+      display: none;
+    }
+
+    .pano-card.center {
+      width: 86vw;
+      max-width: 320px;
+      border-radius: 28px;
+    }
+
+    /* Панель вкладок */
+    .category-nav-wrap {
+      top: 60px;
+      padding: 8px 0;
+      overflow: hidden;
+    }
+
+    .category-nav {
+      padding: 0 16px 20px 16px;
+      margin-bottom: -20px;
+      justify-content: flex-start;
+      gap: 8px;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .category-nav::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    .pill-tab {
+      padding: 7px 14px;
+      font-size: 13px;
+    }
+
+    /* Карточки фич */
+    .features-container {
+      padding: 30px 16px 60px;
+    }
+
+    .cards-grid {
+      gap: 16px;
+    }
+
+    .m3-card {
+      border-radius: 24px;
+      padding: 24px 20px 22px;
+      min-height: auto;
+    }
+
+    .m3-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .m3-card p {
+      font-size: 14.5px;
+      margin-bottom: 18px;
+    }
+
+    /* FAQ */
+    .faq-wrap {
+      padding: 40px 16px 60px;
+    }
+
+    .faq-wrap h2 {
+      font-size: 26px;
+      margin-bottom: 24px;
+    }
+
+    summary {
+      padding: 16px 0;
+      font-size: 16px;
+    }
+
+    .faq-body {
+      font-size: 14px;
+      padding-bottom: 16px;
+    }
+
+    /* Футер */
+    footer {
+      padding: 40px 16px 30px;
+    }
+
+    .footer-inner {
+      gap: 28px;
+      margin-bottom: 30px;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
   }
 </style>
 </head>
@@ -666,10 +816,10 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="spacer"></div>
-    <a class="btn btn-outline" href="https://github.com/Bebrazui/Melo" target="_blank" rel="noopener">
+    <a class="btn btn-outline header-btn-github" href="https://github.com/Bebrazui/Melo" target="_blank" rel="noopener">
       <span class="material-symbols-rounded">code</span> GitHub
     </a>
-    <a class="btn btn-primary" href="https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" download>
+    <a class="btn btn-primary header-btn-apk" href="https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" download>
       <span class="material-symbols-rounded">download</span> Скачать APK
     </a>
   </div>
@@ -701,26 +851,21 @@
 
     <!-- Центр -->
     <div class="hero-container">
-      <div class="hero-badge">
-        <span class="material-symbols-rounded" style="font-size: 18px;">auto_awesome</span>
-        Версия 0.3 для Android
+      <div style="position: relative; display: inline-block;">
+        <img src="img/doodle-arrow.png" class="doodle-item doodle-arrow" id="doodleArrow" alt="" />
+        <h1>Вся музыка.<br>Без ограничений и подписок.</h1>
       </div>
 
-      <h1>Вся музыка.<br>Без ограничений и подписок.</h1>
-
-      <p class="lead">
-        Плеер со свободным доступом к трекам YouTube Music и SoundCloud, умной волной рекомендаций, текстами песен, офлайн-режимом и встроенным обходом блокировок.
-      </p>
+      <div style="position: relative; max-width: 660px; margin: 0 auto 58px;">
+        <p class="lead" style="margin-bottom: 0;">
+          Плеер со свободным доступом к трекам YouTube Music и SoundCloud, умной волной рекомендаций, текстами песен, офлайн-режимом и встроенным обходом блокировок.
+        </p>
+        <img src="img/doodle-underline.svg" class="doodle-item doodle-underline" id="doodleUnderline" alt="" />
+      </div>
 
       <div class="hero-cta">
         <a class="btn btn-primary btn-lg" href="https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" download>
-          <span class="material-symbols-rounded">download</span> Скачать Melo для Android
-        </a>
-        <a class="btn btn-outline btn-lg" href="https://www.rustore.ru/catalog/app/com.melo.music" target="_blank" rel="noopener">
-          <span class="material-symbols-rounded">shopping_bag</span> RuStore
-        </a>
-        <a class="btn btn-outline btn-lg" href="https://4pda.to/forum/index.php?showtopic=1125767#entry144868704" target="_blank" rel="noopener">
-          <span class="material-symbols-rounded">forum</span> 4PDA
+          <span class="material-symbols-rounded">android</span> Скачать Melo
         </a>
       </div>
 
@@ -730,10 +875,17 @@
     </div>
 
     <!-- Правая карточка с QR-кодом -->
-    <div class="hero-side-card right">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=104x104&data=https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" alt="QR-код" />
+    <div class="hero-side-card right" style="position: absolute;">
+      <img src="img/doodle-circle-sharp.png" class="doodle-circle" id="doodleCircle" alt="" />
+      <div style="width: 104px; height: 104px;">
+        <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=104x104&data=https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" alt="QR-код" />
+      </div>
       <span class="label">Скачайте Melo на телефон</span>
     </div>
+
+    <!-- Нарисованное солнце слева внизу и нотки справа внизу -->
+    <img src="img/doodle-sun.png" class="doodle-item doodle-sun" id="doodleSun" alt="" />
+    <img src="img/doodle-notes.png" class="doodle-item doodle-notes" id="doodleNotes" alt="" />
 
     <!-- FULL-BLEED ПАНОРАМА: 3 УНИКАЛЬНЫХ ЭКРАНА БЕЗ ПОВТОРОВ -->
     <div class="panorama-wrap">
@@ -779,29 +931,6 @@
             Как устроено воспроизведение <span class="material-symbols-rounded">arrow_forward</span>
           </a>
         </div>
-
-        <div class="card-visual-bottom">
-          <div class="mock-track-pill">
-            <div class="mock-icon-box" style="color: #00875a;">
-              <span class="material-symbols-rounded">music_note</span>
-            </div>
-            <div style="flex:1;">
-              <div class="mock-track-title">Marina — Ecoute Chérie</div>
-              <div class="mock-track-sub">YouTube Music · 3:24 · 320 kbps</div>
-            </div>
-            <span class="material-symbols-rounded" style="color: #00875a;">equalizer</span>
-          </div>
-          <div class="mock-track-pill" style="opacity: 0.85;">
-            <div class="mock-icon-box" style="color: #e65100;">
-              <span class="material-symbols-rounded">graphic_eq</span>
-            </div>
-            <div style="flex:1;">
-              <div class="mock-track-title">SoundCloud Audio Stream</div>
-              <div class="mock-track-sub">Прямой поток без рекламы</div>
-            </div>
-            <span class="material-symbols-rounded" style="color: #137333;">check_circle</span>
-          </div>
-        </div>
       </div>
 
       <!-- Карточка 2: Бесконечная персональная волна Sea -->
@@ -813,20 +942,6 @@
           <a class="card-footer-link" href="#faq">
             Подробнее об алгоритме Sea <span class="material-symbols-rounded">arrow_forward</span>
           </a>
-        </div>
-
-        <div class="card-visual-bottom">
-          <div class="wave-visual-box">
-            <div class="wave-chip-list">
-              <span class="wave-chip active"><span class="material-symbols-rounded" style="font-size: 16px;">graphic_eq</span> Моя волна Sea</span>
-              <span class="wave-chip">Похоже на любимое</span>
-              <span class="wave-chip">Свежие находки</span>
-            </div>
-            <div class="wave-now-playing">
-              <span class="material-symbols-rounded" style="color: #8e24aa; font-size: 20px;">radio</span>
-              <span>Непрерывный поток персонального радио</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -840,19 +955,6 @@
             Подробнее о работе прокси <span class="material-symbols-rounded">arrow_forward</span>
           </a>
         </div>
-
-        <div class="card-visual-bottom">
-          <div class="net-visual-box">
-            <div class="net-status-left">
-              <span class="net-status-dot"></span>
-              <div>
-                <div class="net-title">ByeDPI C-Engine · 127.0.0.1:1080</div>
-                <div class="net-desc">Desync split TLS · 0% loss · Обход активен</div>
-              </div>
-            </div>
-            <span class="material-symbols-rounded" style="color: #b58105; font-size: 26px;">verified_user</span>
-          </div>
-        </div>
       </div>
 
       <!-- Карточка 4: Офлайн -->
@@ -864,19 +966,6 @@
           <a class="card-footer-link" href="https://github.com/Bebrazui/Melo-Releases/releases/download/ALPHA/app-release.apk" download>
             Скачать и слушать офлайн <span class="material-symbols-rounded">arrow_forward</span>
           </a>
-        </div>
-
-        <div class="card-visual-bottom">
-          <div class="offline-visual-box">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="material-symbols-rounded" style="color: #1a73e8; font-size: 28px;">cloud_done</span>
-              <div>
-                <div class="net-title">Сохранено на устройстве</div>
-                <div class="net-desc">Локальный кеш аудио · Автономный плеер</div>
-              </div>
-            </div>
-            <span class="material-symbols-rounded" style="color: #1a73e8;">download_done</span>
-          </div>
         </div>
       </div>
 
@@ -976,22 +1065,42 @@
 
 <!-- ЖИВОЙ ПАРАЛЛАКС СКРОЛЛА И ИНТЕРАКТИВНЫЕ ТАБЫ -->
 <script>
-  // 1. ПАРАЛЛАКС СКРОЛЛА ДЛЯ ПАНОРАМНОЙ ВИТРИНЫ
+  // 1. ПАРАЛЛАКС СКРОЛЛА ДЛЯ ПАНОРАМНОЙ ВИТРИНЫ И РУКОПИСНЫХ DOODLE
   const leftCard = document.getElementById('panoLeft');
   const centerCard = document.getElementById('panoCenter');
   const rightCard = document.getElementById('panoRight');
+
+  const dSun = document.getElementById('doodleSun');
+  const dNotes = document.getElementById('doodleNotes');
+  const dArrow = document.getElementById('doodleArrow');
+  const dUnderline = document.getElementById('doodleUnderline');
+  const dCircle = document.getElementById('doodleCircle');
 
   let ticking = false;
 
   function updateParallax() {
     const scrollY = window.pageYOffset;
+    const isMobile = window.innerWidth <= 768;
+
     if (scrollY < 1200) {
       const offset = scrollY * 0.12;
       const spread = scrollY * 0.08;
 
-      if (leftCard) leftCard.style.transform = `translateX(-${spread}px) translateY(${20 - offset * 0.5}px) scale(0.95)`;
-      if (centerCard) centerCard.style.transform = `translateY(${-offset * 0.3}px) scale(1)`;
-      if (rightCard) rightCard.style.transform = `translateX(${spread}px) translateY(${20 - offset * 0.5}px) scale(0.95)`;
+      if (!isMobile) {
+        if (leftCard) leftCard.style.transform = `translateX(-${spread}px) translateY(${20 - offset * 0.5}px) scale(0.95)`;
+        if (centerCard) centerCard.style.transform = `translateY(${-offset * 0.3}px) scale(1)`;
+        if (rightCard) rightCard.style.transform = `translateX(${spread}px) translateY(${20 - offset * 0.5}px) scale(0.95)`;
+
+        if (dSun) dSun.style.transform = `translateY(${-scrollY * 0.18}px) rotate(${-scrollY * 0.03}deg)`;
+        if (dNotes) dNotes.style.transform = `translateY(${-scrollY * 0.22}px) rotate(${scrollY * 0.04}deg)`;
+        if (dCircle) dCircle.style.transform = `rotate(${scrollY * 0.05}deg)`;
+      } else {
+        if (centerCard) centerCard.style.transform = 'none';
+      }
+
+      // Стрелка и волна на любых экранах
+      if (dArrow) dArrow.style.transform = `translateY(${-scrollY * 0.06}px) rotate(${-scrollY * 0.02}deg)`;
+      if (dUnderline) dUnderline.style.transform = `translateX(-50%) translateY(${-scrollY * 0.04}px)`;
     }
     ticking = false;
   }
